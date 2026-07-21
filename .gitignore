@@ -1,0 +1,10 @@
+venv/
+.venv/
+.env
+__pycache__/
+*.pyc
+vectorstore/
+.chainlit/
+.vscode/
+.idea/
+.DS_Store

@@ -1,0 +1,735 @@
+# 🚀 Implementation Overview
+
+YatraAI was developed as an AI-powered multimodal travel assistant using a Retrieval Augmented Generation (RAG) architecture.
+
+The goal of YatraAI was to build a travel copilot capable of understanding user requirements, retrieving accurate travel information, analyzing uploaded documents and images, maintaining conversation context, and generating personalized travel plans.
+
+The system combines:
+
+- Large Language Models (LLMs)
+- Retrieval Augmented Generation (RAG)
+- Vector Databases
+- Document Intelligence
+- Image Understanding
+- Conversation Memory
+- User Preference Extraction
+- Personalized Trip Planning
+
+---
+
+# 1. Core AI Assistant Setup
+
+## Chainlit Application
+
+The project started by building the conversational interface using Chainlit.
+
+Implemented:
+
+- Chat-based UI
+- User interaction flow
+- Session handling
+- Message processing
+- Response rendering
+
+Main application file:
+
+```
+
+app.py
+
+```
+
+Responsibilities:
+
+- Initialize chat sessions
+- Receive user queries
+- Process uploaded files/images
+- Send responses back to the user
+
+---
+
+# 2. LLM Integration
+
+## Google Gemini Integration
+
+Integrated Google Gemini as the main reasoning engine of YatraAI.
+
+Created:
+
+```
+
+utils/llm.py
+
+```
+
+Implemented:
+
+- Gemini API connection
+- Model configuration
+- Temperature settings
+- Response generation pipeline
+
+Current model:
+
+```
+
+gemini-3.1-flash-lite
+
+```
+
+The LLM handles:
+
+- Travel conversations
+- Question answering
+- Itinerary generation
+- Document-based responses
+- Image-based understanding
+
+---
+
+# 3. Travel Knowledge Base RAG System
+
+Implemented a complete Retrieval Augmented Generation pipeline to provide accurate travel information.
+
+## Knowledge Base Creation
+
+Created a structured travel dataset containing destination information.
+
+Example structure:
+
+```
+
+data/
+└── destinations/
+├── kerala.txt
+├── rajasthan.txt
+├── gujarat.txt
+└── ...
+
+```
+
+Each destination document contains:
+
+- Destination overview
+- Tourist attractions
+- Best visiting season
+- Local food
+- Transportation details
+- Travel tips
+
+---
+
+# 4. Document Processing and Vector Database
+
+Built a document ingestion pipeline that converts travel information into searchable vector representations.
+
+Pipeline:
+
+```
+
+Travel Documents
+|
+↓
+Text Extraction
+|
+↓
+Text Chunking
+|
+↓
+Embedding Generation
+|
+↓
+FAISS Vector Database
+|
+↓
+Similarity Search
+|
+↓
+Gemini Response Generation
+
+```
+
+Implemented using:
+
+- LangChain document loaders
+- Recursive text splitting
+- Sentence Transformer embeddings
+- FAISS vector database
+
+Embedding model:
+
+```
+
+sentence-transformers/all-MiniLM-L6-v2
+
+```
+
+Created:
+
+```
+
+utils/retriever.py
+
+```
+
+Implemented:
+
+- FAISS loading
+- Similarity retrieval
+- Context fetching
+- Knowledge base searching
+
+---
+
+# 5. Retrieval Augmented Generation Pipeline
+
+Built a complete RAG workflow using retrieved travel context.
+
+The system performs:
+
+1. Receive user query
+2. Understand query intent
+3. Retrieve relevant information
+4. Add retrieved context to prompt
+5. Send context to Gemini
+6. Generate grounded response
+
+Example:
+
+User:
+
+```
+
+Tell me about Munnar
+
+```
+
+Flow:
+
+```
+
+User Query
+|
+↓
+Retriever
+|
+↓
+Kerala Travel Context
+|
+↓
+Gemini
+|
+↓
+Final Answer
+
+```
+
+Implemented features:
+
+- Context retrieval
+- Query understanding
+- Prompt-based generation
+- Source tracking
+- Conversation-aware responses
+
+---
+
+# 6. User Uploaded Document Question Answering
+
+Added support for users to upload their own travel documents.
+
+Supported formats:
+
+- PDF
+- DOCX
+- TXT
+
+Created:
+
+```
+
+utils/file_loader.py
+
+```
+
+Implemented:
+
+- File reading
+- Text extraction
+- Document chunking
+- Embedding generation
+- Temporary vector store creation
+
+Users can upload documents and ask questions.
+
+Example:
+
+Upload:
+
+```
+
+Destination_india.pdf
+
+```
+
+Question:
+
+```
+
+List all destinations mentioned in this document
+
+```
+
+The system retrieves information only from the uploaded file.
+
+---
+
+# 7. Multiple Document Processing
+
+Enhanced document handling to support multiple uploaded files.
+
+Implemented:
+
+- Multiple file uploads
+- Combined document processing
+- Filename metadata tracking
+- Source identification
+
+Example:
+
+```
+
+Upload:
+
+Kerala.pdf
+Goa.pdf
+Rajasthan.pdf
+
+Question:
+
+Compare these destinations
+
+```
+
+The system retrieves information from all uploaded documents and generates a comparison.
+
+---
+
+# 8. Image Understanding Capability
+
+Added multimodal image processing using Gemini Vision.
+
+Created:
+
+```
+
+utils/image_processor.py
+
+```
+
+Implemented:
+
+- Image upload handling
+- Image analysis
+- Destination recognition
+- Travel recommendations based on images
+
+Supported:
+
+- JPG
+- PNG
+
+Architecture:
+
+```
+
+Travel Image
+|
+↓
+Gemini Vision
+|
+↓
+Image Context
+|
+↓
+Travel Response
+
+```
+
+Example:
+
+User uploads:
+
+```
+
+Hawa Mahal image
+
+```
+
+Question:
+
+```
+
+Identify this place
+
+```
+
+Response:
+
+```
+
+This is Hawa Mahal, Jaipur.
+
+```
+
+---
+
+# 9. Multimodal Context Separation
+
+Solved context mixing issues between different information sources.
+
+Initially, image information could affect document-based answers.
+
+Implemented separation between:
+
+```
+
+Image Context
+
+Document Context
+
+Knowledge Base Context
+
+```
+
+Now each information source is handled independently.
+
+Example:
+
+Image query:
+
+```
+
+Source:
+Image Analysis
+
+```
+
+Document query:
+
+```
+
+Source:
+Uploaded Document
+
+```
+
+Knowledge query:
+
+```
+
+Source:
+Travel Knowledge Base
+
+```
+
+---
+
+# 10. Intent Recognition
+
+Implemented user intent detection to understand different types of requests.
+
+The system identifies:
+
+- Normal travel questions
+- Trip planning requests
+- Document questions
+- Image questions
+
+Example:
+
+User:
+
+```
+
+Plan a 5 day Kerala trip
+
+```
+
+Detected:
+
+```
+
+Trip Planning Intent
+
+```
+
+The request is routed to the itinerary generation workflow.
+
+---
+
+# 11. Personalized Trip Planning System
+
+Created a dedicated trip planning module.
+
+Created:
+
+```
+
+prompts/trip_planner_prompt.py
+
+```
+
+The system generates structured itineraries containing:
+
+```
+
+Trip Overview
+
+Day-wise Itinerary
+
+Accommodation
+
+Food Recommendations
+
+Transportation
+
+Estimated Budget
+
+Packing List
+
+Travel Tips
+
+```
+
+Example:
+
+Input:
+
+```
+
+Plan a vegetarian Kerala trip for 5 days
+
+```
+
+Output:
+
+A complete personalized Kerala itinerary.
+
+---
+
+# 12. Conversation Memory
+
+Implemented session-based conversation memory.
+
+Created:
+
+```
+
+utils/memory.py
+
+```
+
+Implemented:
+
+- Previous message storage
+- Follow-up understanding
+- Context-aware conversations
+
+Example:
+
+User:
+
+```
+
+Plan a Kerala trip
+
+```
+
+Assistant:
+
+```
+
+Creates Kerala itinerary
+
+```
+
+User:
+
+```
+
+Make it cheaper
+
+```
+
+The system understands that "it" refers to the previous Kerala trip.
+
+---
+
+# 13. User Preference Extraction
+
+Implemented automatic user profile creation.
+
+Created:
+
+```
+
+utils/user_profile.py
+
+```
+
+The system extracts:
+
+- Budget
+- Duration
+- Travel style
+- Interests
+- Food preferences
+- Traveler type
+- Preferred season
+
+Example:
+
+User:
+
+```
+
+I am vegetarian and travelling for 7 days
+
+````
+
+Extracted profile:
+
+```json
+{
+  "duration": "7 days",
+  "food_preference": "vegetarian"
+}
+````
+
+These preferences are used to personalize future recommendations.
+
+---
+
+# 14. Source Tracking and Citations
+
+Implemented source tracking to improve transparency.
+
+Responses can display:
+
+```
+📚 Sources
+
+kerala.txt
+rajasthan.txt
+```
+
+The system tracks whether information came from:
+
+* Knowledge base documents
+* Uploaded documents
+* Image analysis
+
+This improves user trust and response explainability.
+
+---
+
+# 15. Optional Upload System
+
+Improved the user experience by making uploads optional.
+
+Earlier flow:
+
+```
+Open Application
+        |
+        ↓
+Upload Required
+        |
+        ↓
+Chat
+```
+
+Updated flow:
+
+```
+Open Application
+        |
+        ↓
+Start Chat Immediately
+        |
+        ↓
+Upload Only When Needed
+```
+
+Users can now use YatraAI as a normal travel assistant without uploading anything.
+
+---
+
+# Final YatraAI Architecture
+
+```
+                         USER
+                          |
+                          |
+                    Chainlit UI
+                          |
+                          |
+                       app.py
+                          |
+        ---------------------------------
+        |               |               |
+     Text Query     Documents        Images
+        |               |               |
+        |             FAISS          Gemini
+        |             RAG            Vision
+        |               |               |
+        ---------------------------------
+                          |
+                       Gemini LLM
+                          |
+                          |
+                    Final Response
+```
+
+---
+
+# Completed Features
+
+| Feature                       | Status |
+| ----------------------------- | ------ |
+| Chainlit Chat Interface       | ✅      |
+| Gemini Integration            | ✅      |
+| Travel Knowledge Base         | ✅      |
+| RAG Pipeline                  | ✅      |
+| FAISS Vector Database         | ✅      |
+| Document Upload QA            | ✅      |
+| PDF Support                   | ✅      |
+| DOCX Support                  | ✅      |
+| TXT Support                   | ✅      |
+| Multiple Documents            | ✅      |
+| Image Understanding           | ✅      |
+| Gemini Vision Integration     | ✅      |
+| Intent Detection              | ✅      |
+| Trip Planner                  | ✅      |
+| User Preferences              | ✅      |
+| Conversation Memory           | ✅      |
+| Source Tracking               | ✅      |
+| Multimodal Context Separation | ✅      |
+| Optional Upload Flow          | ✅      |
+
+---
+
+#  Project Status
+
+YatraAI has progressed from a basic chatbot into a complete multimodal AI travel assistant.
+
+The major engineering components completed are:
+
+✅ Retrieval Augmented Generation
+✅ Vector Search System
+✅ Document Intelligence
+✅ Image Understanding
+✅ Personalized Travel Planning
+✅ Conversation Memory
+✅ User Preference Modeling
