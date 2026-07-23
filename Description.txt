@@ -1,0 +1,899 @@
+# 🌍 YatraAI – Intelligent Travel Copilot
+### An AI-powered multimodal travel assistant using Retrieval-Augmented Generation (RAG) for personalized, context-aware travel planning.
+
+---
+
+# 1. Project Overview
+
+YatraAI is an intelligent AI travel assistant designed to simplify travel planning by combining **Large Language Models (LLMs)** with **Retrieval-Augmented Generation (RAG)**.
+
+Traditional travel planning requires users to search across multiple platforms for information about:
+
+* destinations
+* attractions
+* local cuisine
+* transportation
+* weather
+* safety guidelines
+* cultural etiquette
+* budgeting
+* seasonal recommendations
+
+YatraAI solves this problem by providing a single conversational AI assistant that understands user requirements, retrieves relevant information from a curated travel knowledge base, and generates personalized travel recommendations.
+
+Unlike a normal chatbot that relies only on an LLM's pre-trained knowledge, YatraAI uses a RAG architecture where responses are grounded using external travel documents, improving reliability, relevance, and transparency.
+
+The system combines:
+
+* Conversational AI
+* Semantic Search
+* Vector Database Retrieval
+* Large Language Models
+* Document Intelligence
+* Multimodal AI
+* Personalized Recommendation Systems
+
+to create a complete AI-powered travel companion.
+
+---
+
+# 2. Problem Statement
+
+Planning a trip requires users to collect information from multiple sources.
+
+A traveler usually needs answers to questions like:
+
+* Which destination should I visit?
+* What places should I explore?
+* What is the best season to travel?
+* How much budget is required?
+* Where should I stay?
+* What local food should I try?
+* What transportation options are available?
+* What cultural rules should I follow?
+* What should I pack?
+* Is the destination safe?
+
+Current solutions have limitations:
+
+### Traditional Search Engines
+
+* Require browsing multiple websites
+* Information is scattered
+* Difficult to personalize recommendations
+
+### Normal AI Chatbots
+
+* May provide generic answers
+* Can hallucinate information
+* Do not use user-specific travel data
+* Lack source grounding
+
+Therefore, there is a need for an AI travel assistant that can understand user preferences, retrieve reliable travel information, and generate personalized recommendations.
+
+---
+
+# 3. Proposed Solution
+
+YatraAI provides a conversational AI travel assistant powered by Retrieval-Augmented Generation.
+
+The system works by:
+
+1. Understanding the user's travel query
+2. Retrieving relevant information from a travel knowledge base
+3. Combining retrieved information with the user's context
+4. Sending the enhanced prompt to the LLM
+5. Generating a personalized, source-grounded response
+
+Architecture:
+
+```
+                 User
+                   |
+                   |
+             Chainlit UI
+                   |
+                   |
+          Conversation Manager
+                   |
+        -------------------------
+        |                       |
+        |                       |
+   User Memory              RAG Pipeline
+                                |
+                                |
+                         Semantic Search
+                                |
+                                |
+                         FAISS Vector DB
+                                |
+                                |
+                    Travel Knowledge Base
+                                |
+                                |
+                          Gemini LLM
+                                |
+                                |
+                 Personalized Travel Response
+```
+
+---
+
+# 4. Key Objectives
+
+YatraAI aims to:
+
+* Provide intelligent travel recommendations
+* Generate complete travel itineraries
+* Understand user preferences
+* Remember conversation context
+* Retrieve information from trusted sources
+* Support uploaded travel documents
+* Understand travel images
+* Provide personalized suggestions
+* Reduce travel planning effort
+
+---
+
+# 5. Core Features
+
+# 5.1 Conversational AI Assistant
+
+YatraAI provides a natural language chat interface where users can ask travel-related questions.
+
+Examples:
+
+```
+Plan a 5-day Kerala trip.
+
+Suggest honeymoon destinations.
+
+What should I pack for Ladakh in October?
+
+Compare Bali and Phuket.
+```
+
+The assistant responds conversationally instead of requiring users to fill complex forms.
+
+---
+
+# 5.2 Retrieval-Augmented Generation (RAG)
+
+The core intelligence of YatraAI is based on RAG.
+
+Instead of depending only on Gemini's internal knowledge:
+
+```
+User Query
+
+      ↓
+
+Semantic Search
+
+      ↓
+
+Relevant Travel Documents
+
+      ↓
+
+Context Injection
+
+      ↓
+
+Gemini LLM
+
+      ↓
+
+Grounded Response
+```
+
+Benefits:
+
+* Reduced hallucination
+* Better accuracy
+* Domain-specific knowledge
+* Source-backed answers
+
+---
+
+# 5.3 Custom Travel Knowledge Base
+
+YatraAI uses a curated travel knowledge base containing:
+
+## Destination Information
+
+Examples:
+
+* Kerala
+* Goa
+* Rajasthan
+* Karnataka
+* Tamil Nadu
+* Japan
+* Bali
+* Paris
+* Dubai
+
+Information includes:
+
+* destination overview
+* attractions
+* best season
+* activities
+* transportation
+* travel tips
+
+---
+
+## Attractions Database
+
+Contains information about:
+
+* historical monuments
+* beaches
+* mountains
+* temples
+* adventure locations
+* hidden destinations
+
+Examples:
+
+* Taj Mahal
+* Mysore Palace
+* Mount Fuji
+* Eiffel Tower
+
+---
+
+## Cuisine Knowledge
+
+Provides:
+
+* local dishes
+* regional specialties
+* vegetarian options
+* street food recommendations
+
+Example:
+
+User:
+
+```
+Suggest vegetarian food in Kerala
+```
+
+YatraAI:
+
+Provides Kerala vegetarian cuisine recommendations.
+
+---
+
+## Transportation Information
+
+Includes:
+
+* trains
+* buses
+* metro
+* taxis
+* flights
+* rental options
+
+---
+
+## Travel Guides
+
+Contains:
+
+* safety tips
+* cultural etiquette
+* packing advice
+* visa information
+* local customs
+
+---
+
+## Seasonal Travel Information
+
+Provides recommendations based on:
+
+* summer
+* winter
+* monsoon
+* spring
+* autumn
+
+---
+
+# 5.4 Semantic Search
+
+Instead of traditional keyword matching, YatraAI uses vector similarity search.
+
+Example:
+
+User query:
+
+```
+Places for adventure lovers
+```
+
+The system understands related meanings:
+
+* trekking
+* hiking
+* mountains
+* outdoor activities
+
+even if the exact words are not present.
+
+Technology:
+
+```
+HuggingFace Embeddings
++
+FAISS Vector Search
+```
+
+---
+
+# 5.5 Conversational Memory
+
+YatraAI remembers previous conversation context.
+
+Example:
+
+User:
+
+```
+Plan a Kerala trip
+```
+
+AI:
+
+```
+Creates Kerala itinerary
+```
+
+User:
+
+```
+Make it cheaper
+```
+
+AI understands:
+
+* destination = Kerala
+* previous itinerary
+* budget modification request
+
+and updates the plan.
+
+Memory stores:
+
+* previous user messages
+* assistant responses
+* travel context
+
+---
+
+# 5.6 User Preference Memory
+
+YatraAI can identify and remember user preferences.
+
+Examples:
+
+User:
+
+```
+I love trekking.
+```
+
+Stored preference:
+
+```
+Interest:
+Adventure / Trekking
+```
+
+User:
+
+```
+I am vegetarian.
+```
+
+Stored:
+
+```
+Food Preference:
+Vegetarian
+```
+
+Possible preferences:
+
+* Budget traveler
+* Luxury traveler
+* Solo traveler
+* Family traveler
+* Couple traveler
+* Adventure lover
+* Nature lover
+* Food explorer
+
+These preferences improve personalization.
+
+---
+
+# 5.7 Personalized Trip Planner
+
+YatraAI can generate complete travel plans.
+
+Input:
+
+```
+Plan a 5-day Kerala trip under ₹20,000.
+I love nature and photography.
+```
+
+Output:
+
+## Trip Overview
+
+## Day-wise Itinerary
+
+Example:
+
+```
+Day 1:
+Kochi sightseeing
+
+Day 2:
+Munnar exploration
+
+Day 3:
+Tea gardens and waterfalls
+```
+
+## Additional Recommendations
+
+* Hotels
+* Food
+* Transport
+* Budget
+* Packing list
+* Travel tips
+
+---
+
+# 5.8 Multiple Document Upload
+
+Users can upload their own travel documents.
+
+Supported formats:
+
+* PDF
+* DOCX
+* TXT
+* Markdown
+* CSV
+* PPTX (future)
+
+Examples:
+
+Upload:
+
+```
+Europe_trip_plan.pdf
+```
+
+Ask:
+
+```
+Summarize this itinerary
+```
+
+or
+
+```
+Find destinations mentioned in this document
+```
+
+Pipeline:
+
+```
+Uploaded File
+
+↓
+
+Document Loader
+
+↓
+
+Text Extraction
+
+↓
+
+Chunking
+
+↓
+
+Embeddings
+
+↓
+
+Temporary Vector Store
+
+↓
+
+Gemini
+
+↓
+
+Answer
+```
+
+---
+
+# 5.9 Image Understanding
+
+YatraAI supports travel image analysis using Gemini multimodal capabilities.
+
+Users can upload images.
+
+Examples:
+
+Image:
+
+```
+Monument photo
+```
+
+Question:
+
+```
+Identify this place.
+```
+
+Response:
+
+```
+This appears to be Mysore Palace.
+Here is travel information...
+```
+
+Capabilities:
+
+* landmark identification
+* destination recognition
+* image-based travel questions
+* historical information
+
+---
+
+# 5.10 Source-Based Answers
+
+YatraAI provides transparency by displaying retrieved sources.
+
+Example:
+
+```
+Answer:
+
+Munnar is ideal for nature lovers.
+
+Sources:
+
+kerala.txt
+destination_guides.txt
+```
+
+Future improvement:
+
+* page number
+* document section
+* highlighted text
+
+---
+
+# 5.11 Weather Integration (Future)
+
+Planned integration with weather APIs.
+
+Capabilities:
+
+* current weather
+* temperature
+* rainfall prediction
+* best travel days
+* packing recommendations
+
+Example:
+
+```
+Should I visit Kerala this week?
+```
+
+---
+
+# 5.12 Maps Integration (Future)
+
+Planned features:
+
+* nearby attractions
+* route planning
+* distance calculation
+* travel duration
+* map links
+
+Example:
+
+```
+Show route for Kerala 5-day trip
+```
+
+---
+
+# 5.13 Destination Comparison
+
+YatraAI can compare destinations.
+
+Example:
+
+```
+Compare Bali and Phuket.
+```
+
+Comparison:
+
+| Category    | Bali | Phuket |
+| ----------- | ---- | ------ |
+| Budget      |      |        |
+| Beaches     |      |        |
+| Activities  |      |        |
+| Food        |      |        |
+| Best Season |      |        |
+
+---
+
+# 5.14 Travel Recommendations
+
+YatraAI can recommend:
+
+## Destinations
+
+Based on:
+
+* interests
+* budget
+* season
+
+## Restaurants
+
+Based on:
+
+* location
+* cuisine preference
+
+## Activities
+
+Based on:
+
+* adventure
+* relaxation
+* photography
+
+---
+
+# 6. Technology Stack
+
+| Component            | Technology                        |
+| -------------------- | --------------------------------- |
+| Programming Language | Python                            |
+| User Interface       | Chainlit                          |
+| AI Framework         | LangChain                         |
+| LLM                  | Google Gemini   3.1 flash lite                  |
+| Embeddings           | HuggingFace Sentence Transformers |
+| Embedding Model      | all-MiniLM-L6-v2                  |
+| Vector Database      | FAISS                             |
+| Document Processing  | LangChain Loaders                 |
+| Text Splitting       | RecursiveCharacterTextSplitter    |
+| Environment          | VS Code                           |
+| Deployment Target    | Railway     |
+
+---
+
+# 7. Detailed Architecture Components
+
+## Frontend Layer
+
+Technology:
+
+```
+Chainlit
+```
+
+Responsibilities:
+
+* chat interface
+* message handling
+* file upload
+* displaying sources
+* conversation UI
+
+---
+
+## Processing Layer
+
+Technology:
+
+```
+LangChain
+```
+
+Responsibilities:
+
+* prompt management
+* chains
+* retrieval
+* memory
+* document handling
+
+---
+
+## Knowledge Layer
+
+Technology:
+
+```
+FAISS
+```
+
+Responsibilities:
+
+* store embeddings
+* similarity search
+* retrieve relevant information
+
+---
+
+## AI Reasoning Layer
+
+Technology:
+
+```
+Google Gemini
+```
+
+Responsibilities:
+
+* reasoning
+* response generation
+* multimodal understanding
+
+---
+
+# 8. Project Folder Structure
+
+```
+YatraAI/
+
+│
+├── app.py
+├── ingest.py
+├── requirements.txt
+├── .env
+│
+├── data/
+│   ├── destinations/
+│
+├── vectorstore/
+│
+├── prompts/
+│
+├── utils/
+│   ├── loader.py
+│   ├── embeddings.py
+│   ├── retriever.py
+│   ├── llm.py
+│   ├── memory.py
+│   └── file_loader.py
+│
+└── README.md
+```
+
+---
+
+# 9. Current Implementation Status
+
+Completed:
+
+✅ Gemini integration
+✅ Chainlit interface
+✅ LangChain integration
+✅ Travel dataset
+✅ Document loading
+✅ Metadata handling
+✅ Embeddings
+✅ FAISS vector database
+✅ Semantic retrieval
+✅ RAG pipeline
+✅ Prompt engineering
+✅ Source display
+✅ Response cleaning
+✅ Modular architecture
+✅ Conversation memory
+✅ User preference memory
+✅ Trip planner
+✅ File upload RAG
+✅ Image understanding
+✅ UI improvements
+✅ Testing
+✅ Deployment
+✅ Documentation
+
+Future:
+
+⬜ Weather API
+⬜ Maps integration
+
+---
+
+# 10. Resume Description
+
+**YatraAI – Intelligent Travel Copilot**
+
+Built an AI-powered travel assistant using Retrieval-Augmented Generation (RAG) with Python, LangChain, FAISS, HuggingFace embeddings, Chainlit, and Google Gemini. Developed a semantic search pipeline that retrieves travel knowledge from a custom vector database and generates source-grounded recommendations. Implemented document processing, embeddings generation, conversational AI architecture, prompt engineering, and modular LangChain pipelines. Designed the system for personalized itinerary generation, travel recommendations, document understanding, multimodal image analysis, and future API-based travel intelligence.
+
+---
+
+# 11. Interview Explanation
+
+Through this project, you can explain:
+
+* What is RAG?
+* Why RAG instead of only LLM?
+* How embeddings work?
+* How semantic search works?
+* How FAISS performs similarity search?
+* How LangChain manages AI workflows?
+* How prompts control LLM behavior?
+* How conversational memory works?
+* How personalization improves AI assistants?
+* How multimodal AI works?
+* How to scale from FAISS to managed vector databases?
+* How to deploy production AI applications?
+
+---
+
+# Final Project Vision
+
+YatraAI evolves from a simple chatbot into a complete AI travel ecosystem:
+
+```
+User
+
+↓
+
+Conversational Travel Assistant
+
+↓
+
+Understands Preferences
+
+↓
+
+Retrieves Reliable Knowledge
+
+↓
+
+Analyzes Documents and Images
+
+↓
+
+Uses Live APIs
+
+↓
+
+Generates Personalized Travel Experiences
+```
+
+The final product is a **multimodal, memory-enabled, RAG-powered AI travel companion capable of planning, recommending, explaining, and assisting users throughout their travel journey.**
